@@ -27,15 +27,19 @@ class DateTime implements DateTimeInterface
 
     const DEFAULT_NUMERIC_MODE  = 'default';
     const ARABIC_NUMERIC_MODE   = 'arabic';
+    const ARABIC_FORMAT = ':title (:time) :period - :dayName :day :monthName , :year';
+    const ENGLISH_FORMAT = 'F j, Y, g:i a';
 
     /* ------------------------------------------------------------------------------------------------
      |  Constructor
      | ------------------------------------------------------------------------------------------------
      */
-    public function __construct()
+    public function __construct($format = null)
     {
         $this->date         = new BaseDateTime;
         $this->numericMode  = self::DEFAULT_NUMERIC_MODE;
+        $this->format = $format;
+
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -291,17 +295,21 @@ class DateTime implements DateTimeInterface
      *
      * @return string contain date
      */
-    public function date($timestamp = null, $mode = 0, $arabicMode = false)
+    public function date($timestamp = null, $mode = 'en', $arabicMode = false)
     {
         switch ($mode) {
-            case 2: // Hijri
+            case 'hi': // Hijri
+                $this->format = ($this->format)?$this->format:self::ARABIC_FORMAT;
                 return $this->hijriDate($timestamp, $arabicMode);
 
-            case 1: // Arabic
-                return $this->arabicDate($timestamp, $arabicMode);
+            case 'ar': // Arabic
 
-            case 0: // English
+                $this->format = ($this->format)?$this->format:self::ARABIC_FORMAT;
+               return $this->arabicDate($timestamp, $arabicMode);
+
+            case 'en': // English
             default:
+            $this->format = ($this->format)?$this->format:self::ENGLISH_FORMAT;
                 return $this->englishDate($timestamp);
         }
     }
@@ -319,7 +327,7 @@ class DateTime implements DateTimeInterface
             $this->setTimestamp($unixTime);
         }
 
-        return $this->formatDate("F j, Y, g:i a");
+        return $this->formatDate($this->format);
     }
 
     /**
@@ -399,7 +407,7 @@ class DateTime implements DateTimeInterface
 
         $interval = $this->getDate()->diff(new BaseDateTime('now'));
 
-        if ( (bool) $interval->invert ) {
+        if ( $interval->invert === 1) {
             return 'future';
         }
 
@@ -486,7 +494,7 @@ class DateTime implements DateTimeInterface
      */
     private function parseFullDate($replace)
     {
-        $format = ':title (:time) :period - :dayName :day :monthName , :year';
+        $format = $this->format;
 
         $output = str_replace(
             array_keys($replace),
