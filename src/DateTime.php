@@ -305,11 +305,11 @@ class DateTime implements DateTimeInterface
             case 'ar': // Arabic
 
                 $this->format = ($this->format)?$this->format:self::ARABIC_FORMAT;
-               return $this->arabicDate($timestamp, $arabicMode);
+                return $this->arabicDate($timestamp, $arabicMode);
 
             case 'en': // English
             default:
-            $this->format = ($this->format)?$this->format:self::ENGLISH_FORMAT;
+                $this->format = ($this->format)?$this->format:self::ENGLISH_FORMAT;
                 return $this->englishDate($timestamp);
         }
     }
