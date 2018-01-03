@@ -1,10 +1,10 @@
 {
-    "name": "10pearls/date-locale-converter",
+    "name": "shahzad-khan-10p/date-locale-converter",
     "description": "Date Conversion to locales",
     "license": "MIT",
     "authors": [
         {
-            "name": "10pearls",
+            "name": "shahzadkhan",
             "email": "shahzad.khan@tenpearls.com"
         }
     ],
