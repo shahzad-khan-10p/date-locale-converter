@@ -1,11 +1,11 @@
 {
-    "name": "arcanedev/arabic",
-    "description": "Arabic Libs & Helpers",
+    "name": "10pearls/date-locale-converter",
+    "description": "Date Conversion to locales",
     "license": "MIT",
     "authors": [
         {
-            "name": "ARCANEDEV",
-            "email": "arcanedev.maroc@gmail.com"
+            "name": "10pearls",
+            "email": "shahzad.khan@tenpearls.com"
         }
     ],
     "require": {
