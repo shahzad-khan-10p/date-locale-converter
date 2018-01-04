@@ -34,11 +34,11 @@ class DateTime implements DateTimeInterface
      |  Constructor
      | ------------------------------------------------------------------------------------------------
      */
-    public function __construct($format = null)
+    public function __construct($locale = 'ar')
     {
         $this->date         = new BaseDateTime;
         $this->numericMode  = self::DEFAULT_NUMERIC_MODE;
-        $this->format = $format;
+        $this->locale = $locale;
 
     }
 
@@ -295,21 +295,18 @@ class DateTime implements DateTimeInterface
      *
      * @return string contain date
      */
-    public function date($timestamp = null, $mode = 'en', $arabicMode = false)
+    public function date($timestamp = null, $format = null, $arabicMode = false)
     {
-        switch ($mode) {
+        $this->format = ($format)?$format:self::ENGLISH_FORMAT;
+        switch ($this->locale) {
             case 'hi': // Hijri
-                $this->format = ($this->format)?$this->format:self::ARABIC_FORMAT;
                 return $this->hijriDate($timestamp, $arabicMode);
 
             case 'ar': // Arabic
-
-                $this->format = ($this->format)?$this->format:self::ARABIC_FORMAT;
                 return $this->arabicDate($timestamp, $arabicMode);
 
             case 'en': // English
             default:
-                $this->format = ($this->format)?$this->format:self::ENGLISH_FORMAT;
                 return $this->englishDate($timestamp);
         }
     }
@@ -355,6 +352,7 @@ class DateTime implements DateTimeInterface
             ':day'          => $this->getDay(),
             ':monthName'    => $this->getArabicMonthName(),
             ':year'         => $this->getYear(),
+            ':month'        => $this->getMonth(),
         ]);
     }
 
@@ -494,6 +492,7 @@ class DateTime implements DateTimeInterface
      */
     private function parseFullDate($replace)
     {
+
         $format = $this->format;
 
         $output = str_replace(
@@ -515,6 +514,24 @@ class DateTime implements DateTimeInterface
     protected function parseArabicNumeric($date)
     {
         return Number::convert($date);
+    }
+
+    /**
+     * @param $number
+     * @return string converted number
+     */
+    public function convertNumber($number){
+        switch ($this->locale){
+            case 'hi': // Hijri
+                return Number::convert($number);
+
+            case 'ar': // Arabic
+                return Number::convert($number);
+
+            case 'en': // English
+            default:
+                return $number;
+        }
     }
 
     /* ------------------------------------------------------------------------------------------------
