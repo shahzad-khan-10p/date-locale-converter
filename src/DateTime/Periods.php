@@ -11,8 +11,8 @@ class Periods implements PeriodsInterface
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
-    const AM_PERIOD = 'صباحا';
-    const PM_PERIOD = 'مساءا';
+    const AM_PERIOD = 'ص';
+    const PM_PERIOD = 'م';
 
     /** @var array */
     private static $arabicPeriods    = [
