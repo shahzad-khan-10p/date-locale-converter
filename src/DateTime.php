@@ -154,11 +154,9 @@ class DateTime implements DateTimeInterface
      *
      * @return string
      */
-    public function getTime($seconds = false)
+    public function getTime($timeFormat = 'H:i:s')
     {
-        $format = $seconds ? 'H:i:s' : 'H:i';
-
-        return $this->formatDate($format);
+        return $this->formatDate($timeFormat);
     }
 
     /**
@@ -347,6 +345,7 @@ class DateTime implements DateTimeInterface
         return $this->parseFullDate([
             ':title'        => self::ARABIC_HOUR_TITLE,
             ':time'         => $this->getTime(),
+            ':twelve_hour_time'  => $this->getTime('h:i'),
             ':period'       => $this->getArabicPeriod(),
             ':dayName'      => $this->getArabicDayName(),
             ':day'          => $this->getDay(),
